@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Ahmad 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #00e5ff, #0088aa);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 60px 20px 30px;
+      animation: floatIn 2s ease-out;
+    }
+
+    header h1 {
+      font-size: 3em;
+      margin: 0;
+      text-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+      animation: bounce 2s infinite;
+    }
+
+    header p {
+      font-size: 1.3em;
+      margin-top: 10px;
+      font-style: italic;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    section {
+      padding: 30px 20px;
+      font-size: 1.2em;
+      animation: slideUp 2.5s ease-in-out;
+    }
+
+    .message {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: pulse 3s infinite;
+    }
+
+    footer {
+      margin: 40px 0 20px;
+    }
+
+    .share-btn {
+      background: white;
+      color: #0088aa;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .share-btn:hover {
+      background: #00e5ff;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes floatIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+      50% { box-shadow: 0 0 25px rgba(255,255,255,0.7); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎂 Happy Birthday Ahmad 🎉</h1>
+    <p>To my dearest younger brother 💙</p>
+  </header>
+
+  <section>
+    <div class="message">
+      <p>Dear Ahmad,</p>
+      <p>You bring so much joy, laughter, and light into our lives.  
+      I feel blessed every day to have a brother like you.  
+      May this year be full of happiness, fun, and all your dreams coming true!  
+      Keep smiling and always stay the amazing person you are. 💫</p>
+      <p>With lots of love,  
+      <br> Arhan Ansari 💖</p>
+    </div>
+  </section>
+
+  <footer>
+    <button class="share-btn" onclick="shareWish()">📤 Share This</button>
+  </footer>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <script>
+    // Confetti 🎉
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiPieces = [];
+    const colors = ["#00e5ff","#ffffff","#00bcd4","#80deea","#18ffff","#b2ebf2"];
+
+    class Confetti {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height - canvas.height;
+        this.size = Math.random() * 8 + 4;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.speed = Math.random() * 3 + 2;
+        this.rotation = Math.random() * 360;
+      }
+      update() {
+        this.y += this.speed;
+        this.rotation += this.speed;
+        if (this.y > canvas.height) {
+          this.y = -10;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(0, 0, this.size, this.size);
+        ctx.restore();
+      }
+    }
+
+    function initConfetti() {
+      for (let i = 0; i < 200; i++) {
+        confettiPieces.push(new Confetti());
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiPieces.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateConfetti);
+    }
+
+    initConfetti();
+    animateConfetti();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Share button (WhatsApp)
+    function shareWish() {
+      const msg = "🎂 Happy Birthday Ahmad! 🎉 Check out this special surprise website 💙";
+      const url = window.location.href;
+      window.open(`https://wa.me/?text=${encodeURIComponent(msg + " " + url)}`);
+    }
+  </script>
+</body>
+</html>
