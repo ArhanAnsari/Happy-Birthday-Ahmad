@@ -13,6 +13,7 @@
       color: white;
       text-align: center;
       overflow-x: hidden;
+      overflow-y: hidden;
     }
 
     header {
@@ -52,9 +53,12 @@
 
     footer {
       margin: 40px 0 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
     }
 
-    .share-btn {
+    .btn {
       background: white;
       color: #0088aa;
       border: none;
@@ -64,7 +68,7 @@
       cursor: pointer;
       transition: transform 0.3s, background 0.3s;
     }
-    .share-btn:hover {
+    .btn:hover {
       background: #00e5ff;
       color: white;
       transform: scale(1.1);
@@ -91,6 +95,39 @@
       0%, 100% { box-shadow: 0 0 15px rgba(255,255,255,0.4); }
       50% { box-shadow: 0 0 25px rgba(255,255,255,0.7); }
     }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50% 50% 45% 45%;
+      opacity: 0.8;
+      animation: floatUp 8s linear forwards;
+    }
+    .balloon::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 40px;
+      background: #fff;
+      left: 50%;
+      bottom: -40px;
+      transform: translateX(-50%);
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) rotate(0); opacity: 1; }
+      to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
   </style>
 </head>
 <body>
@@ -112,7 +149,8 @@
   </section>
 
   <footer>
-    <button class="share-btn" onclick="shareWish()">📤 Share This</button>
+    <button class="btn" onclick="celebrate()">🎊 Celebrate</button>
+    <button class="btn" onclick="shareWish()">📤 Share This</button>
   </footer>
 
   <canvas id="confettiCanvas"></canvas>
@@ -173,6 +211,26 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
+
+    // Balloons 🎈
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.classList.add("balloon");
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.background = `hsl(${Math.random()*360},70%,60%)`;
+      balloon.style.animationDuration = (6 + Math.random() * 4) + "s";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 10000);
+    }
+
+    setInterval(createBalloon, 2000);
+
+    // Celebrate Button (burst of balloons)
+    function celebrate() {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(createBalloon, i * 200);
+      }
+    }
 
     // Share button (WhatsApp)
     function shareWish() {
