@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Prevent auto zooming on inputs and keep layout responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Happy Birthday Ahmad 🎉</title>
   <style>
     body {
@@ -13,7 +14,7 @@
       color: white;
       text-align: center;
       overflow-x: hidden;
-      overflow-y: hidden;
+      overflow-y: auto; /* ✅ allow scrolling */
     }
 
     header {
@@ -127,6 +128,7 @@
       top: 0;
       left: 0;
       z-index: -1;
+      pointer-events: none; /* ✅ ensures canvas doesn’t block scrolling */
     }
   </style>
 </head>
